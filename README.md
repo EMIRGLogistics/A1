@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
+:root{
   --black:#0b0b0b;
   --gold:#C6A75E;
   --dark:#161616;
@@ -25,7 +25,7 @@ header{
   position:fixed;
   width:100%;
   top:0;
-  background:rgba(11,11,11,0.95);
+  background:rgba(11,11,11,0.96);
   backdrop-filter:blur(6px);
   border-bottom:1px solid rgba(198,167,94,0.2);
   z-index:1000;
@@ -35,7 +35,7 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 0;
+  height:80px; /* forces vertical alignment */
 }
 
 .logo{
@@ -46,10 +46,21 @@ header{
   letter-spacing:1px;
 }
 
+nav{
+  display:flex;
+  align-items:center;
+}
+
 nav ul{
   list-style:none;
   display:flex;
+  align-items:center;
   gap:40px;
+}
+
+nav li{
+  display:flex;
+  align-items:center;
 }
 
 nav a{
@@ -57,19 +68,16 @@ nav a{
   color:var(--white);
   font-weight:500;
   transition:0.3s;
+  line-height:1;
 }
 
 nav a:hover{color:var(--gold);}
 
 /* HERO */
 .hero{
-  padding-top:140px;
+  padding-top:160px;
   padding-bottom:120px;
-  display:flex;
-  align-items:center;
 }
-
-.hero-content{max-width:700px;}
 
 .hero h1{
   font-family:'Playfair Display',serif;
@@ -87,6 +95,7 @@ nav a:hover{color:var(--gold);}
   text-decoration:none;
   font-weight:600;
   transition:0.3s;
+  cursor:pointer;
 }
 
 .cta-btn:hover{
@@ -94,15 +103,8 @@ nav a:hover{color:var(--gold);}
   color:var(--black);
 }
 
-/* IMAGE SECTION */
-.image-section img{
-  width:100%;
-  border-radius:6px;
-  margin-top:40px;
-}
-
-/* SECTIONS */
 section{padding:120px 0;}
+
 .section-title{
   font-family:'Playfair Display',serif;
   font-size:2.3rem;
@@ -122,6 +124,12 @@ section{padding:120px 0;}
 
 .card p{color:var(--gray);}
 
+.image-section img{
+  width:100%;
+  border-radius:6px;
+  margin-top:40px;
+}
+
 /* REVIEWS */
 .review{
   background:var(--dark);
@@ -137,7 +145,7 @@ section{padding:120px 0;}
 
 .review strong{color:var(--gold);}
 
-/* AI ESTIMATOR */
+/* ESTIMATOR */
 .estimator{
   background:linear-gradient(135deg,#1a1a1a,#0b0b0b);
   padding:50px;
@@ -154,7 +162,7 @@ section{padding:120px 0;}
 }
 
 .result{
-  margin-top:20px;
+  margin:20px 0;
   font-weight:600;
   color:var(--gold);
 }
@@ -169,6 +177,7 @@ form input, form textarea{
   color:white;
 }
 
+/* FOOTER */
 footer{
   padding:40px 0;
   border-top:1px solid rgba(198,167,94,0.2);
@@ -178,9 +187,21 @@ footer{
 
 /* MOBILE */
 @media(max-width:768px){
+
+  .nav-wrapper{
+    flex-direction:column;
+    height:auto;
+    padding:20px 0;
+    gap:15px;
+  }
+
+  nav ul{
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
   .hero h1{font-size:2rem;}
-  nav ul{gap:20px;}
-  .nav-wrapper{flex-direction:column;gap:20px;}
 }
 </style>
 </head>
@@ -204,81 +225,24 @@ footer{
 
 <section class="hero">
 <div class="container">
-<div class="hero-content">
 <h1>AI Strategy for Global Logistics & Supply Chain Leadership</h1>
 <p>Operational visibility. Predictive precision. Autonomous execution.</p>
 <a href="#contact" class="cta-btn">Request Strategic Assessment →</a>
-</div>
+
 <div class="image-section">
 <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d" alt="Global Logistics Port">
 </div>
 </div>
 </section>
 
-<section id="solutions">
-<div class="container">
-<h2 class="section-title">Advisory Solutions</h2>
-<div class="grid">
-
-<div class="card">
-<h3>Operational Mapping</h3>
-<p>End-to-end AI process visibility and structural optimization.</p>
-</div>
-
-<div class="card">
-<h3>Forecasting & Demand Planning</h3>
-<p>Predictive intelligence improving inventory and planning precision.</p>
-</div>
-
-<div class="card">
-<h3>Intelligent Autonomy</h3>
-<p>Autonomous execution systems enhancing decision velocity.</p>
-</div>
-
-<div class="card">
-<h3>AI Risk & Resilience Modeling</h3>
-<p>Scenario simulation and disruption modeling across global supply networks.</p>
-</div>
-
-</div>
-</div>
-</section>
-
 <section id="insights">
 <div class="container">
-<h2 class="section-title">AI Market Insights</h2>
+<h2 class="section-title">AI Control Tower & Supply Chain Intelligence</h2>
+
 <div class="image-section">
-<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" alt="AI Data Analytics">
-</div>
-</div>
-</section>
-
-<section id="reviews">
-<div class="container">
-<h2 class="section-title">Client Perspectives</h2>
-<div class="grid">
-
-<div class="review">
-<p>"EMIRG AI redefined our operational transparency."</p>
-<strong>COO, Global Freight Enterprise</strong>
+<img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="Global Supply Chain Control Tower">
 </div>
 
-<div class="review">
-<p>"Forecasting precision improved significantly."</p>
-<strong>VP Supply Chain, Multinational Distributor</strong>
-</div>
-
-<div class="review">
-<p>"Autonomy deployment accelerated execution."</p>
-<strong>Director Logistics Innovation</strong>
-</div>
-
-<div class="review">
-<p>"Their resilience modeling prepared us for disruptions we hadn't anticipated."</p>
-<strong>Chief Strategy Officer, International Shipping Group</strong>
-</div>
-
-</div>
 </div>
 </section>
 
@@ -287,21 +251,25 @@ footer{
 <h2 class="section-title">AI Readiness Estimator</h2>
 
 <div class="estimator">
+
 <select id="companySize">
-<option value="">Select Company Size</option>
-<option value="Small">Small (1-100 employees)</option>
-<option value="Mid">Mid-Market (100-1000)</option>
-<option value="Enterprise">Enterprise (1000+)</option>
+<option value="">Company Size</option>
+<option>Small (1-100)</option>
+<option>Mid-Market (100-1000)</option>
+<option>Enterprise (1000+)</option>
 </select>
 
 <select id="complexity">
 <option value="">Operational Complexity</option>
-<option value="Low">Single Region</option>
-<option value="Medium">Multi-Region</option>
-<option value="High">Global Network</option>
+<option>Single Region</option>
+<option>Multi-Region</option>
+<option>Global Network</option>
 </select>
 
 <div class="result" id="result"></div>
+
+<button class="cta-btn" onclick="scrollToForm()">Continue to Strategic Inquiry →</button>
+
 </div>
 </div>
 </section>
@@ -336,6 +304,10 @@ if(size && complexity){
 result.innerHTML="Recommended Engagement: Enterprise AI Strategy & Autonomy Assessment";
 }
 });
+
+function scrollToForm(){
+document.getElementById("contact").scrollIntoView({behavior:"smooth"});
+}
 
 function sendEmail(){
 let name=document.getElementById("name").value;
