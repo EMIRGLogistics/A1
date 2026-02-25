@@ -99,9 +99,26 @@ width:100%;
 
 /* HERO */
 .hero{
+position:relative;
 padding-top:180px;
 padding-bottom:140px;
 border-bottom:1px solid var(--divider);
+overflow:hidden;
+}
+
+#networkCanvas{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+opacity:0.25;
+}
+
+.hero .container{
+position:relative;
+z-index:2;
 }
 
 .hero h1{
@@ -109,12 +126,6 @@ font-size:2.4rem;
 font-weight:600;
 margin-bottom:35px;
 max-width:760px;
-}
-
-.hero-image img{
-width:100%;
-border-radius:4px;
-margin-bottom:35px;
 }
 
 .hero p{
@@ -158,10 +169,6 @@ margin-bottom:70px;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:60px;
-}
-
-.card{
-padding-top:10px;
 }
 
 .card h3{
@@ -232,7 +239,7 @@ border:1px solid var(--divider);
 color:white;
 }
 
-/* FADE ANIMATION */
+/* FADE */
 .fade{
 opacity:0;
 transform:translateY(25px);
@@ -282,15 +289,10 @@ font-size:1.8rem;
 </header>
 
 <section class="hero fade">
+<canvas id="networkCanvas"></canvas>
 <div class="container">
 <h1>AI Strategy for Global Logistics & Supply Chain Leadership</h1>
-
-<div class="hero-image">
-<img src="https://images.unsplash.com/photo-1581091012184-5c6d1d3f6b56" alt="Global supply chain control tower">
-</div>
-
 <p>Operational visibility. Predictive precision. Autonomous execution across complex global networks.</p>
-
 <a href="#contact" class="cta-btn">Request Strategic Assessment →</a>
 </div>
 </section>
@@ -298,7 +300,6 @@ font-size:1.8rem;
 <section id="solutions" class="fade">
 <div class="container">
 <h2 class="section-title">Advisory Solutions</h2>
-
 <div class="grid">
 
 <div class="card">
@@ -329,12 +330,50 @@ font-size:1.8rem;
 </div>
 </section>
 
+<section id="insights" class="fade">
+<div class="container">
+<h2 class="section-title">AI Market Insights</h2>
+<p style="color:var(--gray);max-width:700px;">
+AI adoption across global logistics networks is accelerating rapidly, with enterprises deploying control tower intelligence,
+predictive demand stabilization, and autonomous execution layers to compress cost structures while increasing resilience.
+</p>
+</div>
+</section>
+
+<section id="reviews" class="fade">
+<div class="container">
+<h2 class="section-title">Client Perspectives</h2>
+<div class="grid">
+
+<div class="review">
+<p>"EMIRG AI materially improved our supply chain transparency and execution speed."</p>
+<strong>COO, Global Freight Enterprise</strong>
+</div>
+
+<div class="review">
+<p>"Forecast stability improved significantly across multi-region operations."</p>
+<strong>VP Supply Chain Strategy</strong>
+</div>
+
+<div class="review">
+<p>"Autonomous optimization reduced cost leakage across our network."</p>
+<strong>Director of Logistics Innovation</strong>
+</div>
+
+<div class="review">
+<p>"Resilience modeling gave us clarity during volatile macro shifts."</p>
+<strong>Chief Strategy Officer</strong>
+</div>
+
+</div>
+</div>
+</section>
+
 <section id="estimator" class="fade">
 <div class="container">
 <h2 class="section-title">AI Readiness & ROI Estimator</h2>
 
 <div class="estimator">
-
 <select id="companySize">
 <option value="">Company Size</option>
 <option value="1">Small (1-100)</option>
@@ -350,9 +389,7 @@ font-size:1.8rem;
 </select>
 
 <div class="result" id="result"></div>
-
 <button class="cta-btn" onclick="transferEstimator()">Continue to Strategic Inquiry →</button>
-
 </div>
 </div>
 </section>
@@ -367,13 +404,12 @@ font-size:1.8rem;
 <textarea id="message" placeholder="Describe your objectives..." required></textarea>
 <button class="cta-btn" type="submit">Submit Strategic Request →</button>
 </form>
-
 </div>
 </section>
 
 <script>
+/* ROI Calculator */
 let storedData="";
-
 document.getElementById("complexity").addEventListener("change", calculateROI);
 
 function calculateROI(){
@@ -387,8 +423,7 @@ Company Size Score: ${size}
 Complexity Score: ${complexity}
 Estimated ROI Potential: ${roi}%+
 Recommended Engagement: Enterprise AI Transformation`;
-document.getElementById("result").innerHTML=
-`Estimated ROI Potential: ${roi}%+`;
+document.getElementById("result").innerHTML=`Estimated ROI Potential: ${roi}%+`;
 }
 }
 
@@ -410,7 +445,7 @@ window.location.href=
 `mailto:logistics@emirg-group.com?subject=Strategic AI Inquiry - ${company}&body=Name: ${name}%0ACompany: ${company}%0A%0A${encodeURIComponent(message)}`;
 }
 
-/* Fade In Observer */
+/* Fade In */
 const faders=document.querySelectorAll('.fade');
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
@@ -419,8 +454,76 @@ entry.target.classList.add('visible');
 }
 });
 },{threshold:0.2});
-
 faders.forEach(el=>observer.observe(el));
+
+/* AI Network Background */
+const canvas=document.getElementById("networkCanvas");
+const ctx=canvas.getContext("2d");
+let particles=[];
+const particleCount=60;
+
+function resizeCanvas(){
+canvas.width=canvas.offsetWidth;
+canvas.height=canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener("resize",resizeCanvas);
+
+class Particle{
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+this.vx=(Math.random()-0.5)*0.4;
+this.vy=(Math.random()-0.5)*0.4;
+this.radius=2;
+}
+update(){
+this.x+=this.vx;
+this.y+=this.vy;
+if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
+if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
+}
+draw(){
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+ctx.fillStyle="#C6A75E";
+ctx.fill();
+}
+}
+
+function init(){
+particles=[];
+for(let i=0;i<particleCount;i++){
+particles.push(new Particle());
+}
+}
+init();
+
+function connect(){
+for(let a=0;a<particles.length;a++){
+for(let b=a;b<particles.length;b++){
+let dx=particles[a].x-particles[b].x;
+let dy=particles[a].y-particles[b].y;
+let distance=dx*dx+dy*dy;
+if(distance<12000){
+ctx.beginPath();
+ctx.strokeStyle="rgba(198,167,94,0.08)";
+ctx.lineWidth=1;
+ctx.moveTo(particles[a].x,particles[a].y);
+ctx.lineTo(particles[b].x,particles[b].y);
+ctx.stroke();
+}
+}
+}
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{p.update();p.draw();});
+connect();
+requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
