@@ -14,6 +14,7 @@
 --gray:#9a9a9a;
 --light-gray:#cfcfcf;
 --divider:rgba(255,255,255,0.06);
+--hover-scale:1.03;
 }
 
 *{
@@ -28,6 +29,7 @@ body{
 background:var(--black);
 color:white;
 line-height:1.6;
+transition:background 0.3s;
 }
 
 .container{
@@ -68,6 +70,13 @@ nav ul{
 display:flex;
 gap:42px;
 list-style:none;
+align-items:center;
+}
+
+nav li{
+height:100%;
+display:flex;
+align-items:center;
 }
 
 nav a{
@@ -76,6 +85,8 @@ text-decoration:none;
 color:var(--light-gray);
 font-weight:500;
 font-size:0.9rem;
+padding:8px 0;
+transition:all 0.3s ease;
 }
 
 nav a::after{
@@ -84,13 +95,14 @@ position:absolute;
 left:0;
 bottom:-6px;
 width:0;
-height:1px;
+height:2px;
 background:var(--gold);
 transition:width 0.3s ease;
 }
 
 nav a:hover{
 color:white;
+transform:translateY(-1px);
 }
 
 nav a:hover::after{
@@ -104,6 +116,7 @@ padding-top:180px;
 padding-bottom:140px;
 border-bottom:1px solid var(--divider);
 overflow:hidden;
+transition:all 0.3s;
 }
 
 #networkCanvas{
@@ -114,6 +127,7 @@ width:100%;
 height:100%;
 z-index:0;
 opacity:0.25;
+transition:opacity 0.3s ease;
 }
 
 .hero .container{
@@ -126,12 +140,14 @@ font-size:2.4rem;
 font-weight:600;
 margin-bottom:35px;
 max-width:760px;
+transition:transform 0.3s ease;
 }
 
 .hero p{
 color:var(--gray);
 max-width:600px;
 margin-bottom:40px;
+transition:transform 0.3s ease, color 0.3s ease;
 }
 
 .cta-btn{
@@ -146,17 +162,20 @@ letter-spacing:0.5px;
 transition:all 0.3s ease;
 background:none;
 cursor:pointer;
+transform:translateZ(0);
 }
 
 .cta-btn:hover{
 background:var(--gold);
 color:black;
+transform:scale(var(--hover-scale));
 }
 
 /* SECTIONS */
 section{
 padding:130px 0;
 border-bottom:1px solid var(--divider);
+transition:all 0.3s ease;
 }
 
 .section-title{
@@ -171,20 +190,33 @@ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:60px;
 }
 
+.card{
+padding-top:10px;
+transition:all 0.3s ease;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(var(--hover-scale));
+}
+
 .card h3{
 font-weight:600;
 margin-bottom:12px;
+transition:color 0.3s ease;
 }
 
 .card p{
 color:var(--gray);
 margin-bottom:12px;
+transition:color 0.3s ease;
 }
 
 .metric{
 color:var(--gold);
 font-weight:600;
 font-size:0.9rem;
+transition:color 0.3s ease;
 }
 
 /* REVIEWS */
@@ -192,17 +224,25 @@ font-size:0.9rem;
 background:#141414;
 padding:30px;
 border-radius:4px;
+transition:transform 0.3s ease;
+cursor:pointer;
+}
+
+.review:hover{
+transform:scale(var(--hover-scale));
 }
 
 .review p{
 color:var(--gray);
 margin-bottom:15px;
 font-style:italic;
+transition:color 0.3s ease;
 }
 
 .review strong{
 color:white;
 font-size:0.85rem;
+transition:color 0.3s ease;
 }
 
 /* ESTIMATOR */
@@ -217,12 +257,12 @@ margin-bottom:20px;
 background:#111;
 color:white;
 border:1px solid var(--divider);
+transition:all 0.3s ease;
 }
 
-.result{
-margin:20px 0;
-color:var(--gold);
-font-weight:600;
+select:hover, select:focus{
+border-color:var(--gold);
+transform:scale(1.01);
 }
 
 /* FORM */
@@ -237,6 +277,13 @@ margin-bottom:20px;
 background:#111;
 border:1px solid var(--divider);
 color:white;
+transition:all 0.3s ease;
+}
+
+form input:hover, form input:focus,
+form textarea:hover, form textarea:focus{
+border-color:var(--gold);
+transform:scale(1.01);
 }
 
 /* FADE */
@@ -361,7 +408,7 @@ predictive demand stabilization, and autonomous execution layers to compress cos
 </div>
 
 <div class="review">
-<p>"Resilience modeling gave us clarity during volatile macro shifts."</p>
+<p>"Resilience modeling gave clarity during volatile macro shifts."</p>
 <strong>Chief Strategy Officer</strong>
 </div>
 
@@ -372,7 +419,6 @@ predictive demand stabilization, and autonomous execution layers to compress cos
 <section id="estimator" class="fade">
 <div class="container">
 <h2 class="section-title">AI Readiness & ROI Estimator</h2>
-
 <div class="estimator">
 <select id="companySize">
 <option value="">Company Size</option>
@@ -397,7 +443,6 @@ predictive demand stabilization, and autonomous execution layers to compress cos
 <section id="contact" class="fade">
 <div class="container">
 <h2 class="section-title">Strategic Inquiry</h2>
-
 <form onsubmit="sendEmail(); return false;">
 <input type="text" id="name" placeholder="Full Name" required>
 <input type="text" id="company" placeholder="Company Name" required>
@@ -407,11 +452,16 @@ predictive demand stabilization, and autonomous execution layers to compress cos
 </div>
 </section>
 
+<footer class="fade">
+<div class="container" style="text-align:center;color:var(--gray);padding:40px 0;font-size:0.85rem;">
+© 2026 EMIRG AI. All rights reserved.
+</div>
+</footer>
+
 <script>
 /* ROI Calculator */
 let storedData="";
 document.getElementById("complexity").addEventListener("change", calculateROI);
-
 function calculateROI(){
 let size=parseInt(document.getElementById("companySize").value);
 let complexity=parseInt(document.getElementById("complexity").value);
@@ -426,7 +476,6 @@ Recommended Engagement: Enterprise AI Transformation`;
 document.getElementById("result").innerHTML=`Estimated ROI Potential: ${roi}%+`;
 }
 }
-
 function transferEstimator(){
 if(!storedData){
 alert("Please complete the estimator selections.");
@@ -435,12 +484,10 @@ return;
 document.getElementById("message").value=storedData+"\n\nObjectives:\n";
 document.getElementById("contact").scrollIntoView({behavior:"smooth"});
 }
-
 function sendEmail(){
 let name=document.getElementById("name").value;
 let company=document.getElementById("company").value;
 let message=document.getElementById("message").value;
-
 window.location.href=
 `mailto:logistics@emirg-group.com?subject=Strategic AI Inquiry - ${company}&body=Name: ${name}%0ACompany: ${company}%0A%0A${encodeURIComponent(message)}`;
 }
@@ -461,68 +508,16 @@ const canvas=document.getElementById("networkCanvas");
 const ctx=canvas.getContext("2d");
 let particles=[];
 const particleCount=60;
-
-function resizeCanvas(){
-canvas.width=canvas.offsetWidth;
-canvas.height=canvas.offsetHeight;
-}
+function resizeCanvas(){canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;}
 resizeCanvas();
 window.addEventListener("resize",resizeCanvas);
-
-class Particle{
-constructor(){
-this.x=Math.random()*canvas.width;
-this.y=Math.random()*canvas.height;
-this.vx=(Math.random()-0.5)*0.4;
-this.vy=(Math.random()-0.5)*0.4;
-this.radius=2;
-}
-update(){
-this.x+=this.vx;
-this.y+=this.vy;
-if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
-if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
-}
-draw(){
-ctx.beginPath();
-ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
-ctx.fillStyle="#C6A75E";
-ctx.fill();
-}
-}
-
-function init(){
-particles=[];
-for(let i=0;i<particleCount;i++){
-particles.push(new Particle());
-}
-}
+class Particle{constructor(){this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.vx=(Math.random()-0.5)*0.4; this.vy=(Math.random()-0.5)*0.4; this.radius=2;}
+update(){this.x+=this.vx; this.y+=this.vy; if(this.x<=0||this.x>=canvas.width)this.vx*=-1; if(this.y<=0||this.y>=canvas.height)this.vy*=-1;}
+draw(){ctx.beginPath(); ctx.arc(this.x,this.y,this.radius,0,Math.PI*2); ctx.fillStyle="#C6A75E"; ctx.fill();}}
+function init(){particles=[]; for(let i=0;i<particleCount;i++){particles.push(new Particle());}}
 init();
-
-function connect(){
-for(let a=0;a<particles.length;a++){
-for(let b=a;b<particles.length;b++){
-let dx=particles[a].x-particles[b].x;
-let dy=particles[a].y-particles[b].y;
-let distance=dx*dx+dy*dy;
-if(distance<12000){
-ctx.beginPath();
-ctx.strokeStyle="rgba(198,167,94,0.08)";
-ctx.lineWidth=1;
-ctx.moveTo(particles[a].x,particles[a].y);
-ctx.lineTo(particles[b].x,particles[b].y);
-ctx.stroke();
-}
-}
-}
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-particles.forEach(p=>{p.update();p.draw();});
-connect();
-requestAnimationFrame(animate);
-}
+function connect(){for(let a=0;a<particles.length;a++){for(let b=a;b<particles.length;b++){let dx=particles[a].x-particles[b].x; let dy=particles[a].y-particles[b].y; let distance=dx*dx+dy*dy; if(distance<12000){ctx.beginPath(); ctx.strokeStyle="rgba(198,167,94,0.08)"; ctx.lineWidth=1; ctx.moveTo(particles[a].x,particles[a].y); ctx.lineTo(particles[b].x,particles[b].y); ctx.stroke();}}}}
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); connect(); requestAnimationFrame(animate);}
 animate();
 </script>
 
